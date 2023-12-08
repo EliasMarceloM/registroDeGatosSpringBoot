@@ -11,7 +11,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/products-api
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: sua senha 
+      SPRING_DATASOURCE_PASSWORD: suaSenha
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     restart: unless-stopped  
     networks:
@@ -25,7 +25,7 @@ services:
     environment:
       POSTGRES_DB: products-api
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: sua senha
+      POSTGRES_PASSWORD: suaSenha
     volumes:
       - postgres_data:/var/lib/postgresql/data 
     healthcheck:

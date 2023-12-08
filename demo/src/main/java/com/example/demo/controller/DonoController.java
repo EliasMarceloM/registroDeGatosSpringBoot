@@ -22,13 +22,15 @@ public class DonoController {
     
     @Autowired
     private DonoService donoService;
+   
+    
 
     @GetMapping("/{id}")
     public Dono getDonoById(@PathVariable Integer id) {
         return donoService.getById(id);
     }
    
-
+    
     @GetMapping("/all")
     public List<Dono> getAllDonos() {
         return donoService.getAll();
@@ -36,7 +38,8 @@ public class DonoController {
 
     @PostMapping("/save")
     public Dono saveDono(@RequestBody Dono dono) {
-        return donoService.saveDono(dono);
+    	
+    	return donoService.saveDono(dono);
     }
 
     @DeleteMapping("/delete/{id}")
