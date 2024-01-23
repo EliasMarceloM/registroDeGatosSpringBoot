@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  app:
+  backend:
     image: 'docker-spring-boot:latest'
-    build: .
+    build: ./demo
     ports:
       - "8080:8080"
     depends_on:
@@ -11,11 +11,31 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/products-api
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: sua senha 
+      SPRING_DATASOURCE_PASSWORD: sua senha
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     restart: unless-stopped  
     networks:
       - projeto_gatos_network
+   
+   
+   
+
+  frontend:
+    image: 'docker-react:latest'
+    build:
+      context: ./front_end  
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - projeto_gatos_network
+    volumes: 
+      - ./front_end:/app  
+
+    links:
+      - backend
 
   db:
     image: postgres:latest
@@ -41,4 +61,5 @@ networks:
     driver: bridge
 volumes:
   postgres_data: 
+ 
  

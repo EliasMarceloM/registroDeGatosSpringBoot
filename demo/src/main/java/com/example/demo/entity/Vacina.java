@@ -1,15 +1,15 @@
 package com.example.demo.entity;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "vacina")
@@ -21,12 +21,12 @@ public class Vacina {
 
     @Column(name = "nome")
     private String nome;
+    
     @Column(name = "dataVacina")
-    private LocalDate dataVacina; 
+    private LocalDate dataVacina; // Adicionando a data da vacinação
 
-    @OneToOne
-    @JoinColumn(name = "gato_id")
-    private Gato gato;
+    @ManyToMany(mappedBy = "vacinas")
+    private List<Gato> gatos;
 
 	public Integer getId() {
 		return id;
@@ -52,14 +52,13 @@ public class Vacina {
 		this.dataVacina = dataVacina;
 	}
 
-	public Gato getGato() {
-		return gato;
+	public List<Gato> getGatos() {
+		return gatos;
 	}
 
-	public void setGato(Gato gato) {
-		this.gato = gato;
+	public void setGatos(List<Gato> gatos) {
+		this.gatos = gatos;
 	}
 
-    
-    
+   
 }

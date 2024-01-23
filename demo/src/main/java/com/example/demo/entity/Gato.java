@@ -1,18 +1,16 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import java.util.Set;
 
 @Entity
-@Table(name = "gato")
 public class Gato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +18,38 @@ public class Gato {
 
     @Column(name = "nome")
     private String nome;
+    
     @Column(name = "descricao")
     private String descricao;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "dono_id")
-    private Dono dono;
+    @ManyToMany
+    @JoinTable(
+        name = "gato_dono",
+        joinColumns = @JoinColumn(name = "gato_id"),
+        inverseJoinColumns = @JoinColumn(name = "dono_id")
+    )
+    private Set<Dono> donos;
 
-    @OneToOne(mappedBy = "gato", cascade = CascadeType.ALL, optional = true)
-    private Vacina vacina;
+    @ManyToMany
+    @JoinTable(
+        name = "gato_vacina",
+        joinColumns = @JoinColumn(name = "gato_id"),
+        inverseJoinColumns = @JoinColumn(name = "vacina_id")
+    )
+    private Set<Vacina> vacinas;
+
+    // Construtor padrão
+    public Gato() {
+        // Aqui você pode inicializar variáveis ou deixar vazio
+    }
+
+    // Construtor com parâmetros
+    public Gato(String nome, String descricao, Set<Dono> donos, Set<Vacina> vacinas) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.donos = donos;
+        this.vacinas = vacinas;
+    }
 
 	public Integer getId() {
 		return id;
@@ -54,21 +75,22 @@ public class Gato {
 		this.descricao = descricao;
 	}
 
-	public Dono getDono() {
-		return dono;
+	public Set<Dono> getDonos() {
+		return donos;
 	}
 
-	public void setDono(Dono dono) {
-		this.dono = dono;
+	public void setDonos(Set<Dono> donos) {
+		this.donos = donos;
 	}
 
-	public Vacina getVacina() {
-		return vacina;
+	public Set<Vacina> getVacinas() {
+		return vacinas;
 	}
 
-	public void setVacina(Vacina vacina) {
-		this.vacina = vacina;
+	public void setVacinas(Set<Vacina> vacinas) {
+		this.vacinas = vacinas;
 	}
-}
-  
+
     
+}
+
